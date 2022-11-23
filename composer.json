@@ -1,0 +1,19 @@
+{
+    "name": "battis/lazy-secrets",
+    "description": "A (thin) wrapper for google/cloud-secret-manager to reduce boilerplate",
+    "require": {
+        "google/cloud-secret-manager": "^1.9"
+    },
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "Battis\\LazySecrets\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Seth Battis",
+            "email": "seth@battis.net"
+        }
+    ]
+}
