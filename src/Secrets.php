@@ -33,7 +33,7 @@ class Secrets {
     private static function init(string &$project = null, bool $json = false) {
         $project = $project ?? $_ENV['GOOGLE_CLOUD_PROJECT'];
         self::$project = $project;
-        self::$client = new SecretManagerServiceClient();
+            self::$client = new SecretManagerServiceClient();
         self::$json = $json;
     }
 

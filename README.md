@@ -44,5 +44,6 @@ use Battis\LazySecrets\Secrets;
 $data = Secrets::get('MY_APP_SECRET');
 
 // or
-$obj = Secrets::get('MY_APP_SECRET, null, true);
+Secrets::init($project, true);
+$obj = Secrets::get('MY_APP_SECRET');
 ```
