@@ -51,6 +51,7 @@ class Secrets {
      */
     public static function get(string $key, $version = null, bool $json = null, string $project = null)
     {
+        $project = $project ?? self::$project;
         $version = $version ?? 'latest';
         $data = self::getClient($project)->accessSecretVersion("projects/$project/secrets/$key/versions/$version")->getPayload()->getData();
         if ($json ?? self::$json) {
