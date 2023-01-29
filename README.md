@@ -1,5 +1,7 @@
 # Lazy Secrets
 
+[![Latest Version](https://img.shields.io/packagist/v/battis/lazy-secrets.svg)](https://packagist.org/packages/battis/lazy-secrets)
+
 A (thin) wrapper for google/cloud-secret-manager to reduce boilerplate
 
 ## Install
