@@ -129,16 +129,16 @@
         },
         {
             "name": "google/cloud-secret-manager",
-            "version": "v1.10.1",
+            "version": "v1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-secret-manager.git",
-                "reference": "286b333db9a6e3afd14b6de64faddd2729dc9861"
+                "reference": "e66d951c3f61efec3b8d3524c4df4133a50a493d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-secret-manager/zipball/286b333db9a6e3afd14b6de64faddd2729dc9861",
-                "reference": "286b333db9a6e3afd14b6de64faddd2729dc9861",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-secret-manager/zipball/e66d951c3f61efec3b8d3524c4df4133a50a493d",
+                "reference": "e66d951c3f61efec3b8d3524c4df4133a50a493d",
                 "shasum": ""
             },
             "require": {
@@ -174,9 +174,9 @@
             ],
             "description": "Secret Manager Client for PHP",
             "support": {
-                "source": "https://github.com/googleapis/google-cloud-php-secret-manager/tree/v1.10.1"
+                "source": "https://github.com/googleapis/google-cloud-php-secret-manager/tree/v1.10.2"
             },
-            "time": "2023-02-10T16:10:50+00:00"
+            "time": "2023-02-25T13:06:03+00:00"
         },
         {
             "name": "google/common-protos",
@@ -377,16 +377,16 @@
         },
         {
             "name": "google/protobuf",
-            "version": "v3.21.12",
+            "version": "v3.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "93019df2df0f8c5c01757ef79f3f077d2cb35b65"
+                "reference": "66495c7f8be461c4a65d697e0705a7ef55ca8c19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/93019df2df0f8c5c01757ef79f3f077d2cb35b65",
-                "reference": "93019df2df0f8c5c01757ef79f3f077d2cb35b65",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/66495c7f8be461c4a65d697e0705a7ef55ca8c19",
+                "reference": "66495c7f8be461c4a65d697e0705a7ef55ca8c19",
                 "shasum": ""
             },
             "require": {
@@ -415,22 +415,22 @@
                 "proto"
             ],
             "support": {
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.12"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.22.0"
             },
-            "time": "2022-12-14T14:50:49+00:00"
+            "time": "2023-02-10T20:00:39+00:00"
         },
         {
             "name": "grpc/grpc",
-            "version": "1.42.0",
+            "version": "1.52.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/grpc/grpc-php.git",
-                "reference": "9fa44f104cb92e924d4da547323a97f3d8aca6d4"
+                "reference": "98394cd601a587ca68294e6209bd713856969105"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/grpc/grpc-php/zipball/9fa44f104cb92e924d4da547323a97f3d8aca6d4",
-                "reference": "9fa44f104cb92e924d4da547323a97f3d8aca6d4",
+                "url": "https://api.github.com/repos/grpc/grpc-php/zipball/98394cd601a587ca68294e6209bd713856969105",
+                "reference": "98394cd601a587ca68294e6209bd713856969105",
                 "shasum": ""
             },
             "require": {
@@ -459,9 +459,9 @@
                 "rpc"
             ],
             "support": {
-                "source": "https://github.com/grpc/grpc-php/tree/v1.42.0"
+                "source": "https://github.com/grpc/grpc-php/tree/v1.52.0"
             },
-            "time": "2021-11-19T08:13:51+00:00"
+            "time": "2023-02-25T05:20:08+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
