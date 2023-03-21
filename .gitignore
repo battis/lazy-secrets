@@ -1,5 +1,6 @@
-/vendor/
 .DS_Store
-/.nova/*
-!/.nova/Artwork
-!/.nova/Configuration.json
+/.cache/
+/coverage/
+/docs/
+/tools/
+/vendor/
