@@ -60,17 +60,19 @@ class Secrets {
      * Get a secret value from the Secret Manager (optionally JSON-decoding
      * it)
      * @param string $key
-     * @param string|int $version (Optional, defaults to `'latest'`)
      * @param bool $json whether or not to JSON-decode the value (Optional,
      *                   defaults to `false`)
      * @param string $project project ID (optional, defaults to the
      *                        previously `init()` value or the
      *                        `GOOGLE_CLOUD_PROJECT` environment variable)
+     * @param string|int $version (Optional, defaults to `'latest'`)
      * @return mixed secret data
      */
-    public static function get(string $key, $version = 'latest', bool $json = null, string $project = null)
+    public static function get(string $key, bool $json = null, string $project = null, $version = 'latest')
     {
+        error_log(json_encode(['project'=>$project, 'self::project'=>self::$project]));
         $client = self::getClient($project);
+        error_log(json_encode(['project'=>$project, 'self::project'=>self::$project]));
         $data = $client->accessSecretVersion("projects/" . self::$project . "/secrets/$key/versions/$version")->getPayload()->getData();
         if ($json ?? self::$json) {
             $decoded = @json_decode($data);
