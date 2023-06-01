@@ -63,6 +63,7 @@ class Secrets {
      */
     public static function create(string $secretId, $data = null, string $projectId = null): string {
         $client = self::getClient($projectId);
+        $projectId = $projectId ?? self::$projectId;
         $secret = $client->createSecret($client->projectName($projectId), $secretId, new Secret(new Replication(new Automatic())));
         if ($data !== null) {
             self::set($secretId, $data);
@@ -78,6 +79,7 @@ class Secrets {
      */
     public static function set(string $secretId, $data, string $projectId = null): string {
         $client = self::getClient($projectId);
+        $projectId = $projectId ?? self::$projectId;
         return $client->addSecretVersion($client->secretName($projectId, $secretId), [$data => (is_string($data) ? $data : json_encode($data))])->getName();
     }
 
@@ -89,6 +91,7 @@ class Secrets {
      */
     public static function get(string $secretId, string $versionId = 'latest', string $projectId) {
         $client = self::getClient($projectId);
+        $projectId = $projectId ?? self::$projectId;
         $data = $client->accessSecretVersion($client->secretVersionName($projectId, $secretId, $versionId))->getPayload()->getData();
         $json = @json_decode($data);
         if ($json !== null || json_last_error() === JSON_ERROR_NONE) {
