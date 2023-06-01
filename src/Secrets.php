@@ -70,10 +70,8 @@ class Secrets {
      */
     public static function get(string $key, bool $json = null, string $project = null, $version = 'latest')
     {
-        error_log(json_encode(['project'=>$project, 'self::project'=>self::$project]));
         $client = self::getClient($project);
-        error_log(json_encode(['project'=>$project, 'self::project'=>self::$project]));
-        $data = $client->accessSecretVersion("projects/" . self::$project . "/secrets/$key/versions/$version")->getPayload()->getData();
+        $data = $client->accessSecretVersion("projects/$project/secrets/$key/versions/$version")->getPayload()->getData();
         if ($json ?? self::$json) {
             $decoded = @json_decode($data);
             if ($decoded !== null || $data === 'null') {
@@ -86,7 +84,7 @@ class Secrets {
     /**
      * Set a secret value in the Secret Manager)
      * @param string $key
-     * @param JsonSerializable $data
+     * @param JsonSerializable|string $data
      * @param string $project project ID (optional, defaults to the
       *                        previously `init()` value or the
       *                        `GOOGLE_CLOUD_PROJECT` environment variable)
@@ -95,6 +93,6 @@ class Secrets {
     public static function set(string $key, $data, string $project = null): SecretVersion {
         $client = self::getClient($project);
         $parent = $client->secretName($project, $key);
-        return $client->addSecretVersion($parent, new SecretPayload(['data'=>json_encode($data)]));
+        return $client->addSecretVersion($parent, new SecretPayload(is_string($data) ? $data : json_encode($data)));
     }
 }
