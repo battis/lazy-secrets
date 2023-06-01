@@ -2,8 +2,10 @@
 
 namespace Battis\LazySecrets;
 
+use Google\Cloud\SecretManager\V1\Replication;
+use Google\Cloud\SecretManager\V1\Replication\Automatic;
+use Google\Cloud\SecretManager\V1\Secret;
 use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
-use Google\Cloud\SecretManager\V1\SecretPayload;
 use Google\Cloud\SecretManager\V1\SecretVersion;
 use JsonSerializable;
 
@@ -11,9 +13,7 @@ class Secrets {
 
     private static ?SecretManagerServiceClient $client = null;
 
-    private static ?string $project = null;
-
-    private static bool $json = false;
+    private static ?string $projectId = null;
 
     private function __construct()
     {}
@@ -33,11 +33,10 @@ class Secrets {
      *                        `GOOGLE_CLOUD_PROJECT` environment variable)
      * @param bool $json Whether or not to decode the secret data as JSON
      */
-    private static function init(string &$project = null, bool $json = false) {
-        $project = $project ?? $_ENV['GOOGLE_CLOUD_PROJECT'];
-        self::$project = $project;
-            self::$client = new SecretManagerServiceClient();
-        self::$json = $json;
+    private static function init(string &$projectId = null) {
+        $project = $project ?? $_ENV['GOOGLE_CLOUD_PROJECT']; // set by Google App Engine
+        self::$projectId = $projectId;
+        self::$client = new SecretManagerServiceClient();
     }
 
     /**
@@ -48,51 +47,53 @@ class Secrets {
      *                        `GOOGLE_CLOUD_PROJECT` environment variable)
      * @return SecretManagerServiceClient
      */
-    private static function getClient(string &$project = null): SecretManagerServiceClient
+    public static function getClient(string &$projectId = null): SecretManagerServiceClient
     {
-        if (self::$client === null || self::$project === null || $project !== null) {
-            self::init($project);
+        if (self::$client === null || self::$projectId === null || $projectId !== null) {
+            self::init($projectId);
         }
         return self::$client;
     }
 
     /**
-     * Get a secret value from the Secret Manager (optionally JSON-decoding
-     * it)
-     * @param string $key
-     * @param bool $json whether or not to JSON-decode the value (Optional,
-     *                   defaults to `false`)
-     * @param string $project project ID (optional, defaults to the
-     *                        previously `init()` value or the
-     *                        `GOOGLE_CLOUD_PROJECT` environment variable)
-     * @param string|int $version (Optional, defaults to `'latest'`)
-     * @return mixed secret data
+     * @param string $secretId
+     * @param string|JsonSerializable $data
+     * @param string $projectId
+     * @return string
      */
-    public static function get(string $key, bool $json = null, string $project = null, $version = 'latest')
-    {
-        $client = self::getClient($project);
-        $data = $client->accessSecretVersion("projects/$project/secrets/$key/versions/$version")->getPayload()->getData();
-        if ($json ?? self::$json) {
-            $decoded = @json_decode($data);
-            if ($decoded !== null || $data === 'null') {
-                return $decoded;
-            }
+    public static function create(string $secretId, $data = null, string $projectId = null): string {
+        $client = self::getClient($projectId);
+        $secret = $client->createSecret($client->projectName($projectId), $secretId, new Secret(new Replication(new Automatic())));
+        if ($data !== null) {
+            self::set($secretId, $data);
         }
-        return $data;
+        return $secret->getName();
     }
 
     /**
-     * Set a secret value in the Secret Manager)
-     * @param string $key
-     * @param JsonSerializable|string $data
-     * @param string $project project ID (optional, defaults to the
-      *                        previously `init()` value or the
-      *                        `GOOGLE_CLOUD_PROJECT` environment variable)
-     * @return SecretVersion
+     * @param string $secretId
+     * @param string|JsonSerializable $data
+     * @param string $projectId
+     * @return string
      */
-    public static function set(string $key, $data, string $project = null): SecretVersion {
-        $client = self::getClient($project);
-        $parent = $client->secretName($project, $key);
-        return $client->addSecretVersion($parent, new SecretPayload(is_string($data) ? $data : json_encode($data)));
+    public static function set(string $secretId, $data, string $projectId = null): string {
+        $client = self::getClient($projectId);
+        return $client->addSecretVersion($client->secretName($projectId, $secretId), [$data => (is_string($data) ? $data : json_encode($data))])->getName();
+    }
+
+    /**
+     * @param string $secretId
+     * @param string $versionId (Optional, default `'latest'`)
+     * @param string $projectId
+     * @return mixed
+     */
+    public static function get(string $secretId, string $versionId = 'latest', string $projectId) {
+        $client = self::getClient($projectId);
+        $data = $client->accessSecretVersion($client->secretVersionName($projectId, $secretId, $versionId))->getPayload()->getData();
+        $json = @json_decode($data);
+        if ($json !== null || json_last_error() === JSON_ERROR_NONE) {
+            $data = $json;
+        }
+        return $data;
     }
 }
