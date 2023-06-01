@@ -3,6 +3,9 @@
 namespace Battis\LazySecrets;
 
 use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
+use Google\Cloud\SecretManager\V1\SecretPayload;
+use Google\Cloud\SecretManager\V1\SecretVersion;
+use JsonSerializable;
 
 class Secrets {
 
@@ -38,32 +41,6 @@ class Secrets {
     }
 
     /**
-     * Get a secret value from the Secret Manager (optionally JSON-decoding
-     * it)
-     * @param string $key
-     * @param string|int $version (Optional, defaults to `'latest'`)
-     * @param bool $json whether or not to JSON-decode the value (Optional,
-     *                   defaults to `false`)
-     * @param string $project project ID (optional, defaults to the
-     *                        previously `init()` value or the
-     *                        `GOOGLE_CLOUD_PROJECT` environment variable)
-     * @return mixed secret data
-     */
-    public static function get(string $key, $version = null, bool $json = null, string $project = null)
-    {
-        $project = $project ?? self::$project;
-        $version = $version ?? 'latest';
-        $data = self::getClient($project)->accessSecretVersion("projects/$project/secrets/$key/versions/$version")->getPayload()->getData();
-        if ($json ?? self::$json) {
-            $decoded = @json_decode($data);
-            if ($decoded !== null || $data === 'null') {
-                return $decoded;
-            }
-        }
-        return $data;
-    }
-
-    /**
      * Get the singleton Secret Manager Client (initializing it, if
      * necessary)
      * @param string $project project ID (optional, defaults to the
@@ -77,5 +54,45 @@ class Secrets {
             self::init($project);
         }
         return self::$client;
+    }
+
+    /**
+     * Get a secret value from the Secret Manager (optionally JSON-decoding
+     * it)
+     * @param string $key
+     * @param string|int $version (Optional, defaults to `'latest'`)
+     * @param bool $json whether or not to JSON-decode the value (Optional,
+     *                   defaults to `false`)
+     * @param string $project project ID (optional, defaults to the
+     *                        previously `init()` value or the
+     *                        `GOOGLE_CLOUD_PROJECT` environment variable)
+     * @return mixed secret data
+     */
+    public static function get(string $key, $version = null, bool $json = null, string $project = null)
+    {
+        $version = $version ?? 'latest';
+        $data = self::getClient($project)->accessSecretVersion("projects/$project/secrets/$key/versions/$version")->getPayload()->getData();
+        if ($json ?? self::$json) {
+            $decoded = @json_decode($data);
+            if ($decoded !== null || $data === 'null') {
+                return $decoded;
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * Set a secret value in the Secret Manager)
+     * @param string $key
+     * @param JsonSerializable $data
+     * @param string $project project ID (optional, defaults to the
+      *                        previously `init()` value or the
+      *                        `GOOGLE_CLOUD_PROJECT` environment variable)
+     * @return SecretVersion
+     */
+    public static function set(string $key, $data, string $project = null): SecretVersion {
+        $client = self::getClient($project);
+        $parent = $client->secretName($project, $key);
+        return $client->addSecretVersion($parent, new SecretPayload(['data'=>json_encode($data)]));
     }
 }
