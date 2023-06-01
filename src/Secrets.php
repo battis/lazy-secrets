@@ -6,7 +6,6 @@ use Google\Cloud\SecretManager\V1\Replication;
 use Google\Cloud\SecretManager\V1\Replication\Automatic;
 use Google\Cloud\SecretManager\V1\Secret;
 use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
-use Google\Cloud\SecretManager\V1\SecretVersion;
 use JsonSerializable;
 
 class Secrets {
@@ -89,7 +88,7 @@ class Secrets {
      * @param string $projectId
      * @return mixed
      */
-    public static function get(string $secretId, string $versionId = 'latest', string $projectId) {
+    public static function get(string $secretId, string $versionId = 'latest', string $projectId = null) {
         $client = self::getClient($projectId);
         $projectId = $projectId ?? self::$projectId;
         $data = $client->accessSecretVersion($client->secretVersionName($projectId, $secretId, $versionId))->getPayload()->getData();
