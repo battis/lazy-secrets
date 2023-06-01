@@ -68,10 +68,10 @@ class Secrets {
      *                        `GOOGLE_CLOUD_PROJECT` environment variable)
      * @return mixed secret data
      */
-    public static function get(string $key, $version = null, bool $json = null, string $project = null)
+    public static function get(string $key, $version = 'latest', bool $json = null, string $project = null)
     {
-        $version = $version ?? 'latest';
-        $data = self::getClient($project)->accessSecretVersion("projects/$project/secrets/$key/versions/$version")->getPayload()->getData();
+        $client = self::getClient($project);
+        $data = $client->accessSecretVersion("projects/" . self::$project . "/secrets/$key/versions/$version")->getPayload()->getData();
         if ($json ?? self::$json) {
             $decoded = @json_decode($data);
             if ($decoded !== null || $data === 'null') {
