@@ -129,20 +129,20 @@
         },
         {
             "name": "google/cloud-secret-manager",
-            "version": "v1.12.1",
+            "version": "v1.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-secret-manager.git",
-                "reference": "81ad79aba73ce6388a7c64bb46eb0c1cc8d6ca70"
+                "reference": "28cb5d982e88c2c78dc58927d199390d25923f6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-secret-manager/zipball/81ad79aba73ce6388a7c64bb46eb0c1cc8d6ca70",
-                "reference": "81ad79aba73ce6388a7c64bb46eb0c1cc8d6ca70",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-secret-manager/zipball/28cb5d982e88c2c78dc58927d199390d25923f6c",
+                "reference": "28cb5d982e88c2c78dc58927d199390d25923f6c",
                 "shasum": ""
             },
             "require": {
-                "google/gax": "^1.2.0",
+                "google/gax": "^1.19.1",
                 "php": ">=7.4"
             },
             "require-dev": {
@@ -174,9 +174,9 @@
             ],
             "description": "Secret Manager Client for PHP",
             "support": {
-                "source": "https://github.com/googleapis/google-cloud-php-secret-manager/tree/v1.12.1"
+                "source": "https://github.com/googleapis/google-cloud-php-secret-manager/tree/v1.12.2"
             },
-            "time": "2023-06-21T21:05:25+00:00"
+            "time": "2023-07-07T20:46:38+00:00"
         },
         {
             "name": "google/common-protos",
@@ -232,16 +232,16 @@
         },
         {
             "name": "google/gax",
-            "version": "v1.21.0",
+            "version": "v1.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "1462f84ab92acf6aa329288ede750b5e33b78318"
+                "reference": "a1497cc4d210848c12901f4e7bc66c0c2947a2bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/1462f84ab92acf6aa329288ede750b5e33b78318",
-                "reference": "1462f84ab92acf6aa329288ede750b5e33b78318",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/a1497cc4d210848c12901f4e7bc66c0c2947a2bd",
+                "reference": "a1497cc4d210848c12901f4e7bc66c0c2947a2bd",
                 "shasum": ""
             },
             "require": {
@@ -281,9 +281,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/gax-php/issues",
-                "source": "https://github.com/googleapis/gax-php/tree/v1.21.0"
+                "source": "https://github.com/googleapis/gax-php/tree/v1.21.1"
             },
-            "time": "2023-06-09T17:49:40+00:00"
+            "time": "2023-06-28T16:30:33+00:00"
         },
         {
             "name": "google/grpc-gcp",
@@ -376,16 +376,16 @@
         },
         {
             "name": "google/protobuf",
-            "version": "v3.23.3",
+            "version": "v3.23.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "e611e00ffc99123fcbddc77774f26c813ead9294"
+                "reference": "fa784054760eec532fe8dd1919d3a0a11f5cef1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/e611e00ffc99123fcbddc77774f26c813ead9294",
-                "reference": "e611e00ffc99123fcbddc77774f26c813ead9294",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/fa784054760eec532fe8dd1919d3a0a11f5cef1f",
+                "reference": "fa784054760eec532fe8dd1919d3a0a11f5cef1f",
                 "shasum": ""
             },
             "require": {
@@ -414,9 +414,9 @@
                 "proto"
             ],
             "support": {
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.23.3"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.23.4"
             },
-            "time": "2023-06-14T16:51:17+00:00"
+            "time": "2023-07-06T18:51:48+00:00"
         },
         {
             "name": "grpc/grpc",
