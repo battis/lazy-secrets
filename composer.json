@@ -1,23 +1,24 @@
 {
-    "name": "battis/lazy-secrets",
-    "description": "A (thin) wrapper for google/cloud-secret-manager to reduce boilerplate",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "Seth Battis",
-            "email": "seth@battis.net"
-        }
-    ],
-    "require": {
-        "google/cloud-secret-manager": "^1.9"
-    },
-    "autoload": {
-        "psr-4": {
-            "Battis\\LazySecrets\\": "src/"
-        }
-    },
-    "scripts": {
-        "test": "XDEBUG_MODE=coverage ./tools/phpunit --coverage-text --coverage-html=coverage",
-        "docs": "./tools/phpdocumentor -d src -t docs"
+  "name": "battis/lazy-secrets",
+  "description": "A (thin) wrapper for google/cloud-secret-manager to reduce boilerplate",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Seth Battis",
+      "email": "seth@battis.net"
     }
+  ],
+  "require": {
+    "google/cloud-secret-manager": "^1.9",
+    "psr/simple-cache": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Battis\\LazySecrets\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "XDEBUG_MODE=coverage ./tools/phpunit --coverage-text --coverage-html=coverage",
+    "docs": "./tools/phpdocumentor -d src -t docs"
+  }
 }

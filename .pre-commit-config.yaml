@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-yaml
+      - id: check-json
+      - id: check-xml
+  - repo: https://github.com/markdownlint/markdownlint
+    rev: v0.13.0
+    hooks:
+      - id: markdownlint
+  - repo: https://github.com/digitalpulp/pre-commit-php.git
+    rev: 1.4.0
+    hooks:
+      - id: php-lint-all
+      - id: php-cs-fixer
+  - repo: https://github.com/matchory/pre-commit-psalm
+    rev: v1.0.0
+    hooks:
+      - id: psalm
