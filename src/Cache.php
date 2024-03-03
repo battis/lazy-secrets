@@ -104,7 +104,7 @@ class Cache implements CacheInterface
      *
      * @param string $key   The key of the item to store.
      * @param mixed $value The value of the item to store. Must be serializable.
-     * @param null|int|\DateInterval $ttl Included for PSR-16 compatibility. Will be ignored.
+     * @param null|int|\DateInterval $ttl Included for PSR-16 compatibility. Non-null arguments will destroy the prior version of the secret.
      *
      * @return bool True on success and false on failure.
      *
@@ -113,13 +113,24 @@ class Cache implements CacheInterface
      */
     public function set(string $key, $value, $ttl = null): bool
     {
+        $prevVersion = null;
+        try {
+            if ($ttl != null) {
+                $prevVersion = $this->client->accessSecretVersion(
+                    $this->client::secretVersionName($this->projectId, $key, "latest")
+                );
+            }
+        } catch (ApiException $e) {
+            // ignore
+        }
         try {
             $this->client->addSecretVersion(
                 $this->client::secretName($this->projectId, $key),
-                new SecretPayload([
-                "data" => $this->serialize($value),
-        ])
+                new SecretPayload(["data" => $this->serialize($value)])
             );
+            if ($ttl != null && $prevVersion) {
+                $this->client->destroySecretVersion($prevVersion->getName());
+            }
             return true;
         } catch (ApiException $e) {
             return $this->create($key, $value);
@@ -199,7 +210,7 @@ class Cache implements CacheInterface
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
      * @param iterable               $values A list of key => value pairs for a multiple-set operation.
-     * @param null|int|\DateInterval $ttl Included for PSR-16 compatibility. Will be ignored.
+     * @param null|int|\DateInterval $ttl Included for PSR-16 compatibility. Non-null arguments will destroy the prior version of the secret.
      *
      * @return bool True on success and false on failure.
      *
