@@ -24,6 +24,8 @@ class Cache implements CacheInterface
      * @param string $projectId Optional. If no project ID is provided, the
      *     environment will be checked for the standard `GOOGLE_CLOUD_PROJECT`
      *     variable to be used.
+     *     
+     * @api
      */
     public function __construct(string $projectId = null)
     {
@@ -62,7 +64,7 @@ class Cache implements CacheInterface
             if ($payload) {
                 $data = $payload->getData();
                 /** @var mixed $value */
-                $value = @json_decode($data);
+                $value = @json_decode($data, true);
                 if ($value !== null || json_last_error() === JSON_ERROR_NONE) {
                     /** @var mixed $data */
                     $data = $value;
@@ -73,7 +75,7 @@ class Cache implements CacheInterface
             return $default;
         }
     }
-
+    
     /**
      * @param string $key
      * @param mixed $value
