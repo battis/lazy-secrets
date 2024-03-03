@@ -53,16 +53,14 @@ class Secrets
 
     /**
      * @param string $secretId
-     * @param string $versionId (Optional, default `'latest'`)
      * @param string $projectId
      * @return mixed
      * @api
      */
     public static function get(
         string $secretId,
-        string $versionId = "latest",
         string $projectId = null
     ) {
-        return Secrets::getCache($projectId)->get($secretId, null, $versionId);
+        return Secrets::getCache($projectId)->get($secretId, null);
     }
 }

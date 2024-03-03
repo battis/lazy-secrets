@@ -49,7 +49,7 @@ class Cache implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
      */
-    public function get(string $key, ?mixed $default = null): mixed
+    public function get(string $key, mixed $default = null): mixed
     {
         try {
             /** @var mixed $data */
