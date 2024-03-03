@@ -49,14 +49,14 @@ class Cache implements CacheInterface
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
      */
-    public function get($key, $default = null, string $versionId = "latest")
+    public function get($key, $default = null)
     {
         try {
             /** @var mixed $data */
             $data = $default;
             $payload = $this->client
               ->accessSecretVersion(
-                  $this->client::secretVersionName($this->projectId, $key, $versionId)
+                  $this->client::secretVersionName($this->projectId, $key, "latest")
               )
               ->getPayload();
             if ($payload) {
