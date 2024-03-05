@@ -8,6 +8,7 @@ use Google\Cloud\SecretManager\V1\Replication\Automatic;
 use Google\Cloud\SecretManager\V1\Secret;
 use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
 use Google\Cloud\SecretManager\V1\SecretPayload;
+use Google\Cloud\SecretManager\V1\SecretVersion;
 use Psr\SimpleCache\CacheInterface;
 
 class Cache implements CacheInterface
@@ -106,7 +107,7 @@ class Cache implements CacheInterface
      *
      * @param string $key   The key of the item to store.
      * @param mixed $value The value of the item to store. Must be serializable.
-     * @param null|int|\DateInterval $ttl Included for PSR-16 compatibility. Non-null arguments will destroy the prior version of the secret.
+     * @param null|int|\DateInterval $ttl Included for PSR-16 compatibility. Numeric values for $ttl will be treated as the number of secret versions to retain. Others will be destroyed.
      *
      * @return bool True on success and false on failure.
      *
@@ -115,23 +116,21 @@ class Cache implements CacheInterface
      */
     public function set(string $key, $value, $ttl = null): bool
     {
-        $prevVersion = null;
         try {
-            if ($ttl != null) {
-                $prevVersion = $this->client->accessSecretVersion(
-                    $this->client::secretVersionName($this->projectId, $key, "latest")
-                );
-            }
-        } catch (ApiException $e) {
-            // ignore
-        }
-        try {
+            $secretName = $this->client::secretName($this->projectId, $key);
             $this->client->addSecretVersion(
-                $this->client::secretName($this->projectId, $key),
+                $secretName,
                 new SecretPayload(["data" => $this->serialize($value)])
             );
-            if ($ttl != null && $prevVersion) {
-                $this->client->destroySecretVersion($prevVersion->getName());
+            if ($ttl !== null && is_numeric($ttl)) {
+                $versions = $this->client->listSecretVersions($secretName, ['filter' => 'state:ENABLED']);
+                $counter = 0;
+                foreach($versions->getIterator() as $version) {
+                    $counter++;
+                    if ($counter > $ttl) {
+                        $this->client->destroySecretVersion($version->getName());
+                    }
+                }
             }
             return true;
         } catch (ApiException $e) {
