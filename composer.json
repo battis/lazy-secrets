@@ -9,7 +9,7 @@
     }
   ],
   "require": {
-    "google/cloud-secret-manager": "^1.9",
+    "google/cloud-secret-manager": "^2.3",
     "psr/simple-cache": "^3.0"
   },
   "autoload": {
