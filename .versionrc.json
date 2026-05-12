@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "ts/",
+  "releaseCommitMessageFormat": "chore: release @battis/lazy-secrets@{{currentTag}}"
+}
