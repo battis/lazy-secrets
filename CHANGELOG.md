@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.2](https://github.com/battis/lazy-secrets/compare/ts/1.0.1...ts/1.0.2) (2026-05-12)
+
+
+### Bug Fixes
+
+* wrap dynamic declaration in function call ([c309192](https://github.com/battis/lazy-secrets/commit/c309192f1e1c7544b174c1ed3f7aa835bce170b3))
+
 ## [1.0.1](https://github.com/battis/lazy-secrets/compare/ts/1.0.0...ts/1.0.1) (2026-05-12)
 
 
