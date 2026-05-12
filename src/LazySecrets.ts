@@ -4,7 +4,9 @@ import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 let _client!: SecretManagerServiceClient;
 function client() {
   if (!_client) {
-    _client = new SecretManagerServiceClient();
+    _client = new SecretManagerServiceClient({
+      projectId: process.env.GOOGLE_CLOUD_PROJECT
+    });
   }
   return _client;
 }
