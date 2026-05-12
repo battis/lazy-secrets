@@ -1,14 +1,20 @@
 import { JSONValue } from '@battis/typescript-tricks';
 import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 
-const client = new SecretManagerServiceClient();
+let _client!: SecretManagerServiceClient;
+function client() {
+  if (!_client) {
+    _client = new SecretManagerServiceClient();
+  }
+  return _client;
+}
 
 export async function get<T extends JSONValue = JSONValue>(
   name: string,
   version = 'latest'
 ) {
   let value: T | string | undefined = undefined;
-  const [secret] = await client.accessSecretVersion({
+  const [secret] = await client().accessSecretVersion({
     name: `projects/${process.env.GOOGLE_CLOUD_PROJECT}/secrets/${name}/versions/${version}`
   });
   if (
@@ -30,16 +36,16 @@ export async function set<T extends JSONValue = JSONValue>(
   value: T
 ) {
   const parent = `projects/${process.env.GOOGLE_CLOUD_PROJECT}/secrets/${name}`;
-  const [latest] = await client.addSecretVersion({
+  const [latest] = await client().addSecretVersion({
     parent,
     payload: {
       data: Buffer.from(JSON.stringify(value), 'utf-8')
     }
   });
-  const [versions] = await client.listSecretVersions({ parent });
+  const [versions] = await client().listSecretVersions({ parent });
   for (const version of versions) {
     if (version.name !== latest.name && version.state !== 'DESTROYED') {
-      await client.destroySecretVersion(version);
+      await client().destroySecretVersion(version);
     }
   }
 }
