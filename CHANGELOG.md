@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.3](https://github.com/battis/lazy-secrets/compare/ts/1.0.2...ts/1.0.3) (2026-05-12)
+
+
+### Bug Fixes
+
+* explicitly instantiate client using env var GOOGLE_CLOUD_PROJECT ([56bbbfa](https://github.com/battis/lazy-secrets/commit/56bbbfa4fdca03071eee78153ce51156af7cde88))
+
 ## [1.0.2](https://github.com/battis/lazy-secrets/compare/ts/1.0.1...ts/1.0.2) (2026-05-12)
 
 
