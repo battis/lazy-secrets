@@ -7,6 +7,10 @@ export function init(
   opts?: ConstructorParameters<typeof SecretManagerServiceClient>[0],
   force = false
 ) {
+  // Skip Google Cloud Secret Manager initialization during build
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return {} as SecretManagerServiceClient;
+  }
   if (!_client || force) {
     opts = { projectId: process.env.GOOGLE_CLOUD_PROJECT, ...opts };
     _client = new SecretManagerServiceClient(opts);
