@@ -2,11 +2,20 @@ import { JSONValue } from '@battis/typescript-tricks';
 import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 
 let _client!: SecretManagerServiceClient;
+
+export function init(
+  opts?: ConstructorParameters<typeof SecretManagerServiceClient>[0],
+  force = false
+) {
+  if (!_client || force) {
+    opts = { projectId: process.env.GOOGLE_CLOUD_PROJECT, ...opts };
+    _client = new SecretManagerServiceClient(opts);
+  }
+}
+
 function client() {
   if (!_client) {
-    _client = new SecretManagerServiceClient({
-      projectId: process.env.GOOGLE_CLOUD_PROJECT
-    });
+    init();
   }
   return _client;
 }
