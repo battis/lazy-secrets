@@ -1,6 +1,6 @@
 {
   "name": "@battis/lazy-secrets",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A (thin) wrapper for @google-cloud/cloud-secret-manager to reduce boilerplate",
   "homepage": "https://github.com/battis/lazy-secrets/tree/typescript#readme",
   "repository": {

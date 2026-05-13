@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.4](https://github.com/battis/lazy-secrets/compare/ts/1.0.3...ts/1.0.4) (2026-05-13)
+
+
+### Bug Fixes
+
+* expose init() for general use ([fcd9fe3](https://github.com/battis/lazy-secrets/commit/fcd9fe3da6cc66f23ba61486b39ae36375d8b582))
+
 ## [1.0.3](https://github.com/battis/lazy-secrets/compare/ts/1.0.2...ts/1.0.3) (2026-05-12)
 
 
