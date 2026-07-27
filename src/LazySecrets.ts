@@ -52,7 +52,8 @@ export async function get<T extends JSONValue = JSONValue>(
 
 export async function set<T extends JSONValue = JSONValue>(
   name: string,
-  value: T
+  value: T,
+  retain = 1
 ) {
   const parent = `projects/${_projectId}/secrets/${name}`;
   const [latest] = await client().addSecretVersion({
@@ -61,11 +62,13 @@ export async function set<T extends JSONValue = JSONValue>(
       data: Buffer.from(JSON.stringify(value), 'utf-8')
     }
   });
+  let counter = 0;
   for await (const version of client().listSecretVersionsAsync({
     parent,
     filter: 'state=ENABLED'
   })) {
-    if (version.name !== latest.name) {
+    counter++;
+    if (version.name !== latest.name && counter > retain) {
       await client().destroySecretVersion(version);
     }
   }
