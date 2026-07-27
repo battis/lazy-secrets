@@ -26,7 +26,7 @@
     "build:compile": "tsc",
     "prepack": "run-s build",
     "release": "run-s release:*",
-    "release:version": "commit-and-tag-version",
+    "release:version": "commit-and-tag-version --noBumpWhenEmptyChanges",
     "release:git": "git push --follow-tags",
     "release:login": "pnpm login",
     "release:publish": "pnpm publish --access public --publish-branch typescript"
