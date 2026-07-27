@@ -1,6 +1,7 @@
 import { JSONValue } from '@battis/typescript-tricks';
 import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 
+let _projectId = process.env.GOOGLE_CLOUD_PROJECT;
 let _client!: SecretManagerServiceClient;
 
 export function init(
@@ -11,8 +12,14 @@ export function init(
   if (process.env.NEXT_PHASE === 'phase-production-build') {
     return {} as SecretManagerServiceClient;
   }
+  if (opts?.projectId) {
+    _projectId = opts.projectId;
+  }
   if (!_client || force) {
-    opts = { projectId: process.env.GOOGLE_CLOUD_PROJECT, ...opts };
+    opts = {
+      projectId: opts?.projectId || process.env.GOOGLE_CLOUD_PROJECT,
+      ...opts
+    };
     _client = new SecretManagerServiceClient(opts);
   }
 }
@@ -30,7 +37,7 @@ export async function get<T extends JSONValue = JSONValue>(
 ) {
   let value: T | string | undefined = undefined;
   const [secret] = await client().accessSecretVersion({
-    name: `projects/${process.env.GOOGLE_CLOUD_PROJECT}/secrets/${name}/versions/${version}`
+    name: `projects/${_projectId}/secrets/${name}/versions/${version}`
   });
   value = secret.payload?.data?.toString('utf-8');
   if (value) {
@@ -47,7 +54,7 @@ export async function set<T extends JSONValue = JSONValue>(
   name: string,
   value: T
 ) {
-  const parent = `projects/${process.env.GOOGLE_CLOUD_PROJECT}/secrets/${name}`;
+  const parent = `projects/${_projectId}/secrets/${name}`;
   const [latest] = await client().addSecretVersion({
     parent,
     payload: {
