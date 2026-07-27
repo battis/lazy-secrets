@@ -32,15 +32,12 @@ export async function get<T extends JSONValue = JSONValue>(
   const [secret] = await client().accessSecretVersion({
     name: `projects/${process.env.GOOGLE_CLOUD_PROJECT}/secrets/${name}/versions/${version}`
   });
-  if (
-    secret.payload?.data &&
-    secret.payload !== null &&
-    secret.payload.data !== null
-  ) {
+  value = secret.payload?.data?.toString('utf-8');
+  if (value) {
     try {
-      value = JSON.parse(secret.payload.data.toString('utf-8')) as T;
+      value = JSON.parse(value) as T;
     } catch (_) {
-      value = secret.payload.data.toString();
+      // guess it wasn't JSON?
     }
   }
   return value;
