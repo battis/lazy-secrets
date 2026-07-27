@@ -35,7 +35,7 @@ export async function get<T extends JSONValue = JSONValue>(
   name: string,
   version = 'latest'
 ) {
-  let value: T | string | undefined = undefined;
+  let value: T | string | undefined;
   const [secret] = await client().accessSecretVersion({
     name: `projects/${_projectId}/secrets/${name}/versions/${version}`
   });
