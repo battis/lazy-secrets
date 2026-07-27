@@ -57,9 +57,11 @@ export async function set<T extends JSONValue = JSONValue>(
       data: Buffer.from(JSON.stringify(value), 'utf-8')
     }
   });
-  const [versions] = await client().listSecretVersions({ parent });
-  for (const version of versions) {
-    if (version.name !== latest.name && version.state !== 'DESTROYED') {
+  for await (const version of client().listSecretVersionsAsync({
+    parent,
+    filter: 'state=ENABLED'
+  })) {
+    if (version.name !== latest.name) {
       await client().destroySecretVersion(version);
     }
   }
