@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.2](/github.com/battis/lazy-secrets/compare/ts/1.1.1...ts/1.1.2) (2026-08-29)
+
+### Bug Fixes
+
+* install implied @types/node dependeny ([3115796](/github.com/battis/lazy-secrets/commit/3115796fb257aeccab2667e6bea986fbd7749760))
 ## [1.1.1](/github.com/battis/lazy-secrets/compare/ts/1.1.0...ts/1.1.1) (2026-08-29)
 
 ### Bug Fixes
