@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.1](/github.com/battis/lazy-secrets/compare/ts/1.1.0...ts/1.1.1) (2026-08-29)
+
+### Bug Fixes
+
+* bump dependencies and increase min Node version to 22 ([dd541cd](/github.com/battis/lazy-secrets/commit/dd541cdc87f249300873af460aa1f704928371d8))
 ## [1.1.0](https://github.com/battis/lazy-secrets/compare/ts/1.0.4...ts/1.1.0) (2026-07-27)
 
 
