@@ -32,14 +32,14 @@
     "release:publish": "pnpm publish --access public --publish-branch typescript"
   },
   "dependencies": {
-    "@battis/typescript-tricks": "^0.8.5",
+    "@battis/typescript-tricks": "^0.8.6",
     "@google-cloud/secret-manager": "^6.3.0"
   },
   "devDependencies": {
     "@battis/commit": "^0.0.9",
-    "@battis/eslint": "^3.0.6",
-    "@battis/prettier": "^2.0.10",
-    "@tsconfig/node-lts": "^24.0.0",
+    "@battis/eslint": "^3.0.7",
+    "@battis/prettier": "^2.0.11",
+    "@tsconfig/node-lts": "^24.0.1",
     "commit-and-tag-version": "^12.7.3",
     "del-cli": "^7.0.0",
     "npm-run-all": "^4.1.5",
